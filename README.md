@@ -42,4 +42,4 @@ It can be used in the following two modes:
 		    `cd CodeIgniter-3.0.0`<br/>
 		    `Run "php -S 127.0.0.1:80"`<br/>
 		    `Now you can see the webapp on http://localhost`<br/>
-	* Run "./crawl_server" - Server starts listening for request from Webapp.<br/>
+	* Run `./crawl_server` so that server starts listening for request from Webapp.<br/>
