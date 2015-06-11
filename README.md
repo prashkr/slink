@@ -37,7 +37,7 @@ It can be used in the following two modes:
 	   `e.g. ./crawl_cli Delhi Mumbai`
 	
 * For Webapp
-	* Copy codeIgnitor into your server folder so you can access the webapp on `http://localhost`.
+	* Copy codeIgnitor into your server folder so you can access the webapp on `http://localhost` <br/>
 		    `If you don't have a server running then you can use php to create a server` <br/>
 		    `cd CodeIgniter-3.0.0`<br/>
 		    `Run "php -S 127.0.0.1:80"`<br/>
