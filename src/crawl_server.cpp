@@ -30,8 +30,8 @@ string inttostr(int n)
 
 void error(const char *msg)
 {
-    perror(msg);
-    exit(1);
+	perror(msg);
+	exit(1);
 }
 
 //This function talks to the redis server and gets schedule from travelyaari.com
@@ -59,31 +59,31 @@ string response(string source, string destination){
 
 	//Redis cache check
 	redisContext *c;
-    redisReply *reply1, *reply2;
-    const char *hostname = "127.0.0.1";
-    int port = 6379;
-    struct timeval timeout = { 1, 500000 }; // 1.5 seconds
-    c = redisConnectWithTimeout(hostname, port, timeout);
-    if (c == NULL || c->err) {
-        if (c) {
-            printf("Connection error: %s\n", c->errstr);
-            redisFree(c);
-        } else {
-            printf("Connection error: can't allocate redis context\n");
-        }
-        exit(1);
-    }
+	redisReply *reply1, *reply2;
+	const char *hostname = "127.0.0.1";
+	int port = 6379;
+	struct timeval timeout = { 1, 500000 }; // 1.5 seconds
+	c = redisConnectWithTimeout(hostname, port, timeout);
+	if (c == NULL || c->err) {
+		if (c) {
+			printf("Connection error: %s\n", c->errstr);
+			redisFree(c);
+		} else {
+			printf("Connection error: can't allocate redis context\n");
+		}
+		exit(1);
+	}
 
-    cout<<"Looking for Key: "<<key<<endl;
+	cout<<"Looking for Key: "<<key<<endl;
 
-    reply1 = (redisReply* )redisCommand(c,"GET %s", key.c_str());
+	reply1 = (redisReply* )redisCommand(c,"GET %s", key.c_str());
 
-    //if key not found then fetch schedule from travelyaari.com
-    if(reply1->str==NULL){
-        cout<<"Fetching Schedule from Travelyaari"<<endl;
+	//if key not found then fetch schedule from travelyaari.com
+	if(reply1->str==NULL){
+		cout<<"Fetching Schedule from Travelyaari"<<endl;
 
-        //wget will save api response in a file called "schedule.json"
-        string url = "'http://www.travelyaari.com/api/search/?fromCity=" +source+ "&toCity=" +destination+"'";
+		//wget will save api response in a file called "schedule.json"
+		string url = "'http://www.travelyaari.com/api/search/?fromCity=" +source+ "&toCity=" +destination+"'";
 		string command = "wget --quiet -O schedule.json "+url;
 		system(command.c_str());
 
@@ -107,19 +107,19 @@ string response(string source, string destination){
 			cout << "Unable to open file"; 
 
 		//dump (key, value) pair in redis cache
-        reply2 = (redisReply* )redisCommand(c,"SET %s %s", key.c_str(), JSON.c_str());
-	    freeReplyObject(reply2);
+		reply2 = (redisReply* )redisCommand(c,"SET %s %s", key.c_str(), JSON.c_str());
+		freeReplyObject(reply2);
 
-	    return JSON;
-    }
-    else{
+		return JSON;
+	}
+	else{
 
-    	//if key found then fetch from redis cache
-    	cout<<"Fetching from Redis cache"<<endl;
-    	string info(reply1->str);
-    	freeReplyObject(reply1);	
-    	return info;
-    }
+		//if key found then fetch from redis cache
+		cout<<"Fetching from Redis cache"<<endl;
+		string info(reply1->str);
+		freeReplyObject(reply1);	
+		return info;
+	}
 }
 
 
@@ -170,9 +170,9 @@ string parseResponse(string response){
 int main(int argc, char *argv[]){
 
 	int sockfd, newsockfd, portno;
-    socklen_t clilen;
-    
-    struct sockaddr_in serv_addr, cli_addr;
+	socklen_t clilen;
+	
+	struct sockaddr_in serv_addr, cli_addr;
 	int n;
 
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -198,13 +198,13 @@ int main(int argc, char *argv[]){
 			error("ERROR on accept");
 		if (newsockfd > 0){
 			char dobj[1024];
-	        n = read(newsockfd, dobj, 1023);
-	        string query(dobj);
-	        string strl(query);
-	        string s, d;
-	        istringstream iss(strl);
-	        iss >> s;
-	        iss >> d;
+			n = read(newsockfd, dobj, 1023);
+			string query(dobj);
+			string strl(query);
+			string s, d;
+			istringstream iss(strl);
+			iss >> s;
+			iss >> d;
 
 			string src(s);
 			string dest(d);
@@ -216,10 +216,10 @@ int main(int argc, char *argv[]){
 			int len = res.length();
 			char buff[len];
 			strcpy(buff, res.c_str());
-	        n = write(newsockfd, buff, len);
-	    }
-	    cout<<"Response Delivered\n"<<endl;
-	   	close(newsockfd);
+			n = write(newsockfd, buff, len);
+		}
+		cout<<"Response Delivered\n"<<endl;
+		close(newsockfd);
 	}
 
 	close(sockfd);
