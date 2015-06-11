@@ -27,7 +27,7 @@ string inttostr(int n)
 	string str = ss.str();
 	return str;
 }
-
+ 
 void error(const char *msg)
 {
     perror(msg);
