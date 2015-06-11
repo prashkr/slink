@@ -1,5 +1,4 @@
-# Slink
----
+#Slink
 A web crawler in C++ which takes as input two cities and shows bus schedule between them.<br/>
 It sends request to travelyaari.com and stores the response in Redis cache.
 
