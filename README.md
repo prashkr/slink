@@ -1,4 +1,4 @@
-#Slink
+# Slink
 A web crawler in C++ which takes as input two cities and shows bus schedule between them.<br/>
 It sends request to travelyaari.com and stores the response in Redis cache.
 
@@ -6,17 +6,17 @@ It can be used in the following two modes:
 * A command line interface and, <br/>
 * A webapp using codeIgniter MVC framework
 
-###Libraries
+### Libraries
 ---
 * [hiredis](https://github.com/redis/hiredis) - C wrapper for Redis <br/>
 * [rapidjson](https://github.com/miloyip/rapidjson) - for parsing raw JSON repsonse 
 
-###C++ Files:
+### C++ Files:
 ---
 * crawl_cli.cpp - for command line interface.<br/>
 * crawl_server.cpp - server for codeIgnitor MVC framework
 
-###Installation:
+### Installation:
 ---
 * First install Redis server using the following command:<br/>
   `sudo apt-get install redis-server`
@@ -28,7 +28,7 @@ It can be used in the following two modes:
 
 * Run `make compile`
 
-###Running:
+### Running:
 ---
 * Start redis server by typing `redis-server` on terminal.
 
